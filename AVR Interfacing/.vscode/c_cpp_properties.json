@@ -1,0 +1,45 @@
+{
+	"configurations": [
+		{
+			"name": "AVR",
+			"intelliSenseMode": "${default}",
+			"compilerPath": "D:/XDUMP/Toolchain/AVR/avr8-gnu-toolchain-win32_x86_64/bin/avr-gcc.exe",
+			"includePath": [
+				"D:\\XDUMP\\Toolchain\\AVR\\avr8-gnu-toolchain-win32_x86_64\\avr\\include\\avr\\**\\**",
+				"D:\\XDUMP\\Toolchain\\AVR\\avr8-gnu-toolchain-win32_x86_64\\avr\\include\\avr\\**\\**\\**",
+				"${workspaceFolder}/AVR Interfacing/01-LIB/**",
+				"${workspaceFolder}/AVR Interfacing/02-MCAL/**",
+				"${workspaceFolder}/AVR Interfacing/03-HAL/**",
+				"${workspaceFolder}/AVR Interfacing/APP/**",
+				"${workspaceFolder}/AVR Interfacing/src/**"
+			],
+			"compilerArgs": [
+				"-g",
+				"-Os",
+				"-Wall",
+				"-Wextra",
+				"-fpermissive",
+				"-fno-exceptions",
+				"-fno-threadsafe-statics",
+				"-pipe"
+			],
+			"defines": [
+				"__ATmega32__",
+				"__AVR_ATmega32__"
+			],
+			"browse": {
+				"path": [
+					"D:\\XDUMP\\Toolchain\\AVR\\avr8-gnu-toolchain-win32_x86_64\\avr\\include\\avr\\**\\**",
+					"${workspaceFolder}/AVR Interfacing/01-LIB/",
+					"${workspaceFolder}/AVR Interfacing/02-MCAL/",
+					"${workspaceFolder}/AVR Interfacing/03-HAL/",
+					"${workspaceFolder}/AVR Interfacing/APP/",
+					"${workspaceFolder}/AVR Interfacing/src/"
+				]
+			},
+			"cStandard": "${default}",
+			"cppStandard": "${default}"
+		}
+	],
+	"version": 4
+}
