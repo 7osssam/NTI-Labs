@@ -13,8 +13,10 @@
 #ifndef SETTINGS_H /* HEADER GUARD*/
 #define SETTINGS_H
 
-// #define F_CPU 16000000UL
-//  #define F_CPU 8000000UL /* CPU CLOCK FREQUENCY for DOOR_LOCK APP */
-#define F_CPU 1000000UL /* CPU CLOCK FREQUENCY for Stopwatch APP */
+#define Eta32mega
+
+#ifdef Eta32mega
+	#define F_CPU 16000000UL
+#endif
 
 #endif /* SETTINGS_H */
