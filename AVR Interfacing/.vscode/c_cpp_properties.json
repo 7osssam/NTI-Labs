@@ -7,11 +7,11 @@
 			"includePath": [
 				"D:\\XDUMP\\Toolchain\\AVR\\avr8-gnu-toolchain-win32_x86_64\\avr\\include\\avr\\**",
 				"D:\\XDUMP\\Toolchain\\AVR\\avr8-gnu-toolchain-win32_x86_64\\avr\\include\\avr\\**\\**",
-				"${workspaceFolder}/AVR Interfacing/01-LIB/**",
-				"${workspaceFolder}/AVR Interfacing/02-MCAL/**",
-				"${workspaceFolder}/AVR Interfacing/03-HAL/**",
-				"${workspaceFolder}/AVR Interfacing/APP/**",
-				"${workspaceFolder}/AVR Interfacing/src/**"
+				"${workspaceFolder}/01-LIB/**",
+				"${workspaceFolder}/02-MCAL/**",
+				"${workspaceFolder}/03-HAL/**",
+				"${workspaceFolder}/APP/**",
+				"${workspaceFolder}/src/**"
 			],
 			"compilerArgs": [
 				"-g",
@@ -30,11 +30,11 @@
 			"browse": {
 				"path": [
 					"D:\\XDUMP\\Toolchain\\AVR\\avr8-gnu-toolchain-win32_x86_64\\avr\\include\\avr\\**",
-					"${workspaceFolder}/AVR Interfacing/01-LIB/",
-					"${workspaceFolder}/AVR Interfacing/02-MCAL/",
-					"${workspaceFolder}/AVR Interfacing/03-HAL/",
-					"${workspaceFolder}/AVR Interfacing/APP/",
-					"${workspaceFolder}/AVR Interfacing/src/"
+					"${workspaceFolder}/01-LIB/",
+					"${workspaceFolder}/02-MCAL/",
+					"${workspaceFolder}/03-HAL/",
+					"${workspaceFolder}/APP/",
+					"${workspaceFolder}/src/"
 				]
 			},
 			"cStandard": "${default}",
