@@ -460,14 +460,14 @@ extern volatile uint8* const PIN[NUM_OF_PORTS];
  */
 
 /* PORTB */
-#define PB7					  7
-#define PB6					  6
-#define PB5					  5
-#define PB4					  4
-#define PB3					  3
-#define PB2					  2
-#define PB1					  1
-#define PB0					  0
+#define PB7					  15
+#define PB6					  14
+#define PB5					  13
+#define PB4					  12
+#define PB3					  11
+#define PB2					  10
+#define PB1					  9
+#define PB0					  8
 
 /* DDRB */
 #define DDB7				  7
@@ -496,14 +496,14 @@ extern volatile uint8* const PIN[NUM_OF_PORTS];
    PC0 = SCL
  */
 /* PORTC */
-#define PC7					  7
-#define PC6					  6
-#define PC5					  5
-#define PC4					  4
-#define PC3					  3
-#define PC2					  2
-#define PC1					  1
-#define PC0					  0
+#define PC7					  23
+#define PC6					  22
+#define PC5					  21
+#define PC4					  20
+#define PC3					  19
+#define PC2					  18
+#define PC1					  17
+#define PC0					  16
 
 /* DDRC */
 #define DDC7				  7
@@ -537,14 +537,14 @@ extern volatile uint8* const PIN[NUM_OF_PORTS];
  */
 
 /* PORTD */
-#define PD7					  7
-#define PD6					  6
-#define PD5					  5
-#define PD4					  4
-#define PD3					  3
-#define PD2					  2
-#define PD1					  1
-#define PD0					  0
+#define PD7					  31
+#define PD6					  30
+#define PD5					  29
+#define PD4					  28
+#define PD3					  27
+#define PD2					  26
+#define PD1					  25
+#define PD0					  24
 
 /* DDRD */
 #define DDD7				  7

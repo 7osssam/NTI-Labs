@@ -54,28 +54,28 @@
 
 /* Direction of pins */
 /* PORTA PINS */
-#define PA0_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 1st segment */
-#define PA1_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 2nd segment */
-#define PA2_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 3rd segment */
-#define PA3_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 4th segment */
-#define PA4_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 5th segment */
-#define PA5_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 6th segment */
+#define PA0_PIN_DIRECTION	  PIN_INPUT
+#define PA1_PIN_DIRECTION	  PIN_INPUT
+#define PA2_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 2st digit Eta32 mega */
+#define PA3_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 1st digit Eta32 mega */
+#define PA4_PIN_DIRECTION	  PIN_INPUT
+#define PA5_PIN_DIRECTION	  PIN_INPUT
 #define PA6_PIN_DIRECTION	  PIN_INPUT
 #define PA7_PIN_DIRECTION	  PIN_INPUT
 /* PORTB PINS */
-#define PB0_PIN_DIRECTION	  PIN_INPUT
-#define PB1_PIN_DIRECTION	  PIN_INPUT
-#define PB2_PIN_DIRECTION	  PIN_INPUT
-#define PB3_PIN_DIRECTION	  PIN_INPUT
+#define PB0_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 1st Eta32 mega */
+#define PB1_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 2st Eta32 mega */
+#define PB2_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 3st Eta32 mega */
+#define PB3_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 4st Eta32 mega */
 #define PB4_PIN_DIRECTION	  PIN_INPUT
-#define PB5_PIN_DIRECTION	  PIN_INPUT
-#define PB6_PIN_DIRECTION	  PIN_INPUT
+#define PB5_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 3st digit Eta32 mega */
+#define PB6_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment 4st digit Eta32 mega */
 #define PB7_PIN_DIRECTION	  PIN_INPUT
 /* PORTC PINS */
-#define PC0_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 1st bit */
-#define PC1_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 1st bit */
-#define PC2_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 1st bit */
-#define PC3_PIN_DIRECTION	  PIN_OUTPUT /* 7-segment decoder 1st bit */
+#define PC0_PIN_DIRECTION	  PIN_INPUT
+#define PC1_PIN_DIRECTION	  PIN_INPUT
+#define PC2_PIN_DIRECTION	  PIN_INPUT
+#define PC3_PIN_DIRECTION	  PIN_INPUT
 #define PC4_PIN_DIRECTION	  PIN_INPUT
 #define PC5_PIN_DIRECTION	  PIN_INPUT
 #define PC6_PIN_DIRECTION	  PIN_INPUT
