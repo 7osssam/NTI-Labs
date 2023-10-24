@@ -1,4 +1,12 @@
-
+/******************************************************************
+ * @Module   	: Seven segement
+ * @Title 	 	: Header file for Seven segement module 
+ * @Filename 	: SevenSeg.h
+ * @target  	: ATMEGA32
+ * @Author 	 	: Hossam Mohamed
+ * @Compiler 	: avr-gcc 
+ * @Notes    	: 
+ ********************************************************************/
 #ifndef SEVENSEG_H_
 #define SEVENSEG_H_
 

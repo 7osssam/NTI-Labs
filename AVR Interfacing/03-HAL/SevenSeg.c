@@ -1,4 +1,12 @@
-
+/******************************************************************
+ * @Module   	: Seven segement
+ * @Title 	 	: Source file for Seven segement module 
+ * @Filename 	: SevenSeg.c
+ * @target  	: ATMEGA32
+ * @Author 	 	: Hossam Mohamed
+ * @Compiler 	: avr-gcc 
+ * @Notes    	: 
+ ********************************************************************/
 
 #include "DIO.h"
 #include "SevenSeg.h"
