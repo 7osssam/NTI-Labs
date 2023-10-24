@@ -17,26 +17,37 @@ extern volatile uint8* const PORT[NUM_OF_PORTS];
 extern volatile uint8* const DDR[NUM_OF_PORTS];
 extern volatile uint8* const PIN[NUM_OF_PORTS];
 
-#define _BV(bit)			  (1 << (bit))
+#define _BV(bit)				(1 << (bit))
 
-#define _VECTOR(N)			  __vector_##N
+#define _VECTOR(N)				__vector_##N
 
-#define IO_OFFSET			  0x20
+#define IO_OFFSET				0x20
 
-#define _MMIO_BYTE(mem_addr)  ((volatile uint8*)(mem_addr))
-#define _MMIO_WORD(mem_addr)  ((volatile uint16*)(mem_addr))
-#define _MMIO_DWORD(mem_addr) ((volatile uint32*)(mem_addr))
+//#define _MMIO_BYTE(mem_addr)  ((volatile uint8*)(mem_addr))
+//#define _MMIO_WORD(mem_addr)  ((volatile uint16*)(mem_addr))
+//#define _MMIO_DWORD(mem_addr) ((volatile uint32*)(mem_addr))
 
-#define MMIO_REG8(io_addr)	  _MMIO_BYTE((io_addr) + IO_OFFSET)
-#define MMIO_REG16(io_addr)	  _MMIO_WORD((io_addr) + IO_OFFSET)
+#define _MMIO_BYTE_P(mem_addr)	((volatile uint8*)(mem_addr))
+#define _MMIO_WORD_P(mem_addr)	((volatile uint16*)(mem_addr))
+#define _MMIO_DWORD_P(mem_addr) ((volatile uint32*)(mem_addr))
+
+#define _MMIO_BYTE(mem_addr)	(*(volatile uint8*)(mem_addr))
+#define _MMIO_WORD(mem_addr)	(*(volatile uint16*)(mem_addr))
+#define _MMIO_DWORD(mem_addr)	(*(volatile uint32*)(mem_addr))
+
+#define MMIO_REG8_P(io_addr)	_MMIO_BYTE_P((io_addr) + IO_OFFSET)
+#define MMIO_REG16_P(io_addr)	_MMIO_WORD_P((io_addr) + IO_OFFSET)
+
+#define MMIO_REG8(io_addr)		_MMIO_BYTE((io_addr) + IO_OFFSET)
+#define MMIO_REG16(io_addr)		_MMIO_WORD((io_addr) + IO_OFFSET)
 
 /* I/O registers */
 
 /* TWI stands for "Two Wire Interface" or "TWI Was I2C(tm)" */
-#define TWBR				  MMIO_REG8(0x00)
-#define TWSR				  MMIO_REG8(0x01)
-#define TWAR				  MMIO_REG8(0x02)
-#define TWDR				  MMIO_REG8(0x03)
+#define TWBR					MMIO_REG8(0x00)
+#define TWSR					MMIO_REG8(0x01)
+#define TWAR					MMIO_REG8(0x02)
+#define TWDR					MMIO_REG8(0x03)
 
 /* ADC */
 #ifndef __ASSEMBLER__
@@ -63,24 +74,24 @@ extern volatile uint8* const PIN[NUM_OF_PORTS];
 #define SPDR				  MMIO_REG8(0x0F)
 
 /* Port D */
-#define PIND				  MMIO_REG8(0x10)
-#define DDRD				  MMIO_REG8(0x11)
-#define PORTD				  MMIO_REG8(0x12)
+#define PIND				  MMIO_REG8_P(0x10)
+#define DDRD				  MMIO_REG8_P(0x11)
+#define PORTD				  MMIO_REG8_P(0x12)
 
 /* Port C */
-#define PINC				  MMIO_REG8(0x13)
-#define DDRC				  MMIO_REG8(0x14)
-#define PORTC				  MMIO_REG8(0x15)
+#define PINC				  MMIO_REG8_P(0x13)
+#define DDRC				  MMIO_REG8_P(0x14)
+#define PORTC				  MMIO_REG8_P(0x15)
 
 /* Port B */
-#define PINB				  MMIO_REG8(0x16)
-#define DDRB				  MMIO_REG8(0x17)
-#define PORTB				  MMIO_REG8(0x18)
+#define PINB				  MMIO_REG8_P(0x16)
+#define DDRB				  MMIO_REG8_P(0x17)
+#define PORTB				  MMIO_REG8_P(0x18)
 
 /* Port A */
-#define PINA				  MMIO_REG8(0x19)
-#define DDRA				  MMIO_REG8(0x1A)
-#define PORTA				  MMIO_REG8(0x1B)
+#define PINA				  MMIO_REG8_P(0x19)
+#define DDRA				  MMIO_REG8_P(0x1A)
+#define PORTA				  MMIO_REG8_P(0x1B)
 
 /* EEPROM Control Register */
 #define EECR				  MMIO_REG8(0x1C)
