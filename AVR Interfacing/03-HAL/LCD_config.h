@@ -27,10 +27,6 @@
 #define LCD_DATA_LENGTH_8BITS_MODE 1
 #define LCD_DATA_LENGTH_4BITS_MODE 0
 
-/* LCD Modes */
-#define LCD_NUM_LINES			   4
-#define LCD_NUM_POSITIONS		   20
-
 #define LCD_FIRST_LINE			   0x00 // 0x00 - 0x80
 #define LCD_SECOND_LINE			   0x40 // 0x40 - 0xC0
 #define LCD_THIRD_LINE			   0x14 // 0x14 - 0x94
