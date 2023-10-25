@@ -236,7 +236,8 @@ static uint8 NormalMode(void)
 			LCD_displayString(InputExpression);
 			InputIndex++; // increment i to save the next input in the next index
 
-			if (InputIndex == MAX_NORMAL_CALC_LENGTH - 1) // if the user entered the maximum number of inputs
+			// if the user entered the maximum number of inputs
+			if (InputIndex == MAX_NORMAL_CALC_LENGTH - 1)
 			{
 				// display an error message
 				LCD_clearScreen();
