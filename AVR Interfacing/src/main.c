@@ -1,13 +1,11 @@
-
-
-#include "DIO.h"
-
+//#include "ADC_App.h"
+//#include "Calculator.h"
+#include "Playground.h"
 int main(void)
 {
-	DIO_init(&DIO_Configuration);
+	//ADC_APP();
+	//CalculatorMenu();
 
-	while (1)
-	{
-		DIO_SetPinValue(PORTA_ID, PIN0_ID, LOGIC_HIGH);
-	}
+	Playground_init();
+	Playground_MainLoop();
 }
