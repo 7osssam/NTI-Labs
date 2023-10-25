@@ -110,7 +110,7 @@ static uint8 NormalMode(void)
 	uint8 EqualKeyFlag = FALSE;
 	uint8 ExitMenuFlag = 0;
 
-	uint8 input_index = 0;
+	uint8 InputIndex = 0;
 	uint8 input = KEYPAD_NO_PRESSED_KEY;
 
 	uint8 InputExpression[MAX_NORMAL_CALC_LENGTH] = {0};
@@ -142,7 +142,7 @@ static uint8 NormalMode(void)
 			// if the user pressed an operator again after the result
 			if (ExitMenuFlag != CLEAR_KEY_FLAG && ExitMenuFlag != MAIN_MENU_KEY_FLAG)
 			{
-				input_index = 0;			// reset the input index to start from the beginning of the array
+				InputIndex = 0;				// reset the input index to start from the beginning of the array
 				uint8 NegativeFlag = FALSE; // to handle negative numbers
 
 				if (result < 0)
@@ -154,25 +154,25 @@ static uint8 NormalMode(void)
 				/* convert every digit of the result from decimal to char and save it in InputExpression array */
 				while (result != 0)
 				{
-					//InputExpression[input_index++] = (result % 10) + '0';
-					InputExpression[input_index++] = DecimaltoChar(result % 10);
+					//InputExpression[InputIndex++] = (result % 10) + '0';
+					InputExpression[InputIndex++] = DecimaltoChar(result % 10);
 					result /= 10;
 				}
 				if (NegativeFlag == TRUE)
 				{
-					InputExpression[input_index++] = '-'; // add the negative sign back to the expression
+					InputExpression[InputIndex++] = '-'; // add the negative sign back to the expression
 				}
 
 				/* reverse the InputExpression array */
-				for (uint8 i = 0; i < input_index / 2; i++)
+				for (uint8 i = 0; i < InputIndex / 2; i++)
 				{
 					uint8 temp = InputExpression[i];
-					InputExpression[i] = InputExpression[input_index - i - 1];
-					InputExpression[input_index - i - 1] = temp;
+					InputExpression[i] = InputExpression[InputIndex - i - 1];
+					InputExpression[InputIndex - i - 1] = temp;
 				}
 
 				/* save the operator next to the expression */
-				InputExpression[input_index++] = ExitMenuFlag;
+				InputExpression[InputIndex++] = ExitMenuFlag;
 
 				LCD_displayString(InputExpression);
 			}
@@ -183,10 +183,10 @@ static uint8 NormalMode(void)
 		}
 		else if (input == 'C') // if the user pressed C, clear the last input from the LCD
 		{
-			if (input_index > 0)
+			if (InputIndex > 0)
 			{
-				input_index--;						// decrement i to remove the last input from the array
-				InputExpression[input_index] = 0;	// set the last input to zero
+				InputIndex--;						// decrement i to remove the last input from the array
+				InputExpression[InputIndex] = 0;	// set the last input to zero
 				LCD_sendCommand(LCD_GO_TO_HOME);	// reset the cursor to the home position
 				LCD_clearScreen();					// clear the LCD
 				LCD_displayString(InputExpression); // display the new expression without the last input
@@ -196,13 +196,15 @@ static uint8 NormalMode(void)
 		{
 			if (isCharDigit(DecimaltoChar(input))) // if the input is a number '0' - '9'
 			{
-				InputExpression[input_index] = DecimaltoChar(input); // save the input in the array
-				LCD_displayInteger(input);
+				InputExpression[InputIndex] = DecimaltoChar(input); // save the input in the array
+
+				//LCD_displayInteger(input);
 			}
 			else // if the input is an operator
 			{
+				// check if the user entered an invalid input
 				// if the user entered an operator as the first input or after another operator (except '-' to handle negative numbers)
-				if (input_index == 0 || isOperator(InputExpression[input_index - 1]) == TRUE)
+				if (InputIndex == 0 || isOperator(InputExpression[InputIndex - 1]) == TRUE)
 				{
 					// handle negative numbers
 					if (input == '-')
@@ -212,26 +214,29 @@ static uint8 NormalMode(void)
 					else
 					{
 						// display an error message
-						LCD_clearScreen();
-						LCD_displayString("Invalid Input");
-						_delay_ms(1000);
-						LCD_clearScreen();
 
-						input_index = 0;
-						ResetExpression(InputExpression);
+						LCD_sendCommand(LCD_CURSOR_OFF); // turn off the cursor
+
+						LCD_displayStringCenter(1, "Invalid Input");
+						_delay_ms(1000);
+						LCD_displayStringCenter(1, "              ");
+						//InputIndex = 0;
+						//ResetExpression(InputExpression);
 
 						// skip the rest of the loop and wait for the user to enter a valid input
 						continue;
 					}
 				}
 
-				InputExpression[input_index] = input;
-				LCD_displayCharacter(input);
+				InputExpression[InputIndex] = input;
+				//LCD_displayCharacter(input);
 			}
 
-			input_index++; // increment i to save the next input in the next index
+			LCD_clearScreen();
+			LCD_displayString(InputExpression);
+			InputIndex++; // increment i to save the next input in the next index
 
-			if (input_index == MAX_NORMAL_CALC_LENGTH - 1) // if the user entered the maximum number of inputs
+			if (InputIndex == MAX_NORMAL_CALC_LENGTH - 1) // if the user entered the maximum number of inputs
 			{
 				// display an error message
 				LCD_clearScreen();
@@ -239,7 +244,6 @@ static uint8 NormalMode(void)
 				_delay_ms(1000);
 				LCD_clearScreen();
 
-				// reset the calculator
 				ExitMenuFlag = MAIN_MENU_KEY_FLAG;
 				EqualKeyFlag = TRUE; /* to exit the while loop */
 			}
