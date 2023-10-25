@@ -1,3 +1,12 @@
+/******************************************************************
+ * @Project	 	: 7amok4a Playground
+ * @Description : A simple game for two players using the LCD and the keypad.
+ * @target  	: ATMEGA32 (eta32)
+ * @Author 	 	: Hossam Mohamed
+ * @Compiler 	: avr-gcc  
+ * @Notes    	: 
+ ********************************************************************/
+
 #ifndef PLAYGROUND_H_
 #define PLAYGROUND_H_
 
