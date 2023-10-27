@@ -116,6 +116,7 @@ static uint8 NormalMode(void)
 	uint8 InputExpression[MAX_NORMAL_CALC_LENGTH] = {0};
 
 	sint16 result = 0;
+	_delay_ms(DELAY_PRESS_TIME);
 
 	while (EqualKeyFlag == FALSE)
 	{
@@ -267,6 +268,7 @@ static uint8 ProgrammerMode(void)
 	uint8 key = KEYPAD_NO_PRESSED_KEY;
 	uint8 num = 0;
 	LCD_sendCommand(LCD_GO_TO_HOME);
+	_delay_ms(DELAY_PRESS_TIME);
 
 	while (EqualKeyFlag == FALSE)
 	{
