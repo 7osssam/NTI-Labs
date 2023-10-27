@@ -13,7 +13,11 @@
 #define _7amok4a_1_ADDRESS	5
 #define _7amok4a_2_ADDRESS	6
 #define HeartFulled_ADDRESS 7
-#define HeartEmpty_ADDRESS	0
+#define HeartEmpty_ADDRESS	3
+
+#define RUNNING_DELAY		75
+#define JUMPING_DELAY		50
+#define HEART_BEAT_DELAY	100
 
 void CustomCharacter_init()
 {
@@ -35,23 +39,23 @@ void _7amok4a_running(uint8 x, uint8 y)
 	while (1)
 	{
 		static uint8 i = 0;
-		ProgressBar(20, i, 3);
+		ProgressBar(15, i, 3);
 
 		LCD_Goto_XY(x, i);
 		LCD_displayCharacter(_7amok4a_1_ADDRESS);
-		_delay_ms(50);
+		_delay_ms(RUNNING_DELAY);
 		LCD_Goto_XY(x, i);
 		LCD_displayCharacter(_7amok4a_2_ADDRESS);
 
 		LCD_Goto_XY(x, i + 1);
 		LCD_displayCharacter(' ');
-		_delay_ms(50);
+		_delay_ms(RUNNING_DELAY);
 		LCD_Goto_XY(x, i);
 		LCD_displayCharacter(' ');
 
 		LCD_Goto_XY(x, i + 1);
 		LCD_displayCharacter(_7amok4a_1_ADDRESS);
-		_delay_ms(50);
+		_delay_ms(RUNNING_DELAY);
 		LCD_Goto_XY(x, i + 1);
 		LCD_displayCharacter(_7amok4a_2_ADDRESS);
 
@@ -77,22 +81,22 @@ void _7amok4a_jumping(uint8 x, uint8 y)
 			key = KEYPAD_getPressedKey();
 		} while (key == KEYPAD_NO_PRESSED_KEY);
 
-		_delay_ms(50);
+		_delay_ms(JUMPING_DELAY);
 		LCD_Goto_XY(x, y);
 		LCD_displayCharacter(_7amok4a_2_ADDRESS);
 
 		LCD_Goto_XY(x - 1, y);
 		LCD_displayCharacter(' ');
-		_delay_ms(50);
+		_delay_ms(JUMPING_DELAY);
 		LCD_Goto_XY(x, y);
 		LCD_displayCharacter(' ');
 
 		LCD_Goto_XY(x - 1, y);
 		LCD_displayCharacter(_7amok4a_1_ADDRESS);
-		_delay_ms(50);
+		_delay_ms(JUMPING_DELAY);
 		LCD_Goto_XY(x - 1, y);
 		LCD_displayCharacter(_7amok4a_2_ADDRESS);
-		_delay_ms(50);
+		_delay_ms(JUMPING_DELAY);
 		LCD_Goto_XY(x - 1, y);
 		LCD_displayCharacter(' ');
 
@@ -106,10 +110,10 @@ void HeartBeat(uint8 x, uint8 y, uint8 count)
 	{
 		LCD_Goto_XY(x, y);
 		LCD_displayCharacter(HeartFulled_ADDRESS);
-		_delay_ms(50);
+		_delay_ms(HEART_BEAT_DELAY);
 		LCD_Goto_XY(x, y);
 		LCD_displayCharacter(HeartEmpty_ADDRESS);
-		_delay_ms(50);
+		_delay_ms(HEART_BEAT_DELAY);
 	}
 }
 
@@ -199,17 +203,19 @@ void Little_Story_App()
 
 	LCD_clearScreen();
 
-	LCD_displayStringCenter(0, "THE END");
+	LCD_displayStringCenter(0, "AND I SUPPORT");
+	LCD_displayStringCenter(1, "PALESTINE");
 	_delay_ms(1000);
-	LCD_clearScreen();
-	LCD_displayStringCenter(0, "AND ALWAYS REMEMBER");
-	_delay_ms(1000);
+
 	LCD_clearScreen();
 	LCD_displayStringCenter(1, "FREE PALESTINE");
+	HeartBeat(1, 17, 100);
 
+	LCD_clearScreen();
+	// tick time --> freq
+	// ocr --> duty
 	while (1)
 	{
-		HeartBeat(2, 15, 5);
 		Directed();
 	}
 }
