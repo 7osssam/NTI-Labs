@@ -4,6 +4,9 @@
 #include "LCD.h"
 #include "ADC.h"
 #include "ProgressBar.h"
+
+#include "Buzzer.h"
+
 #include <avr/interrupt.h>
 
 #include "SETTINGS.h"
@@ -37,8 +40,16 @@ void ADC_ISR(void)
 	// start conversion for the next channel
 	ADC_startConversionNonBlocking(i);
 
-	i++;
+	if (temp_value >= 30 || LDR_value >= 100)
+	{
+		Buzzer_on();
+	}
+	else
+	{
+		Buzzer_off();
+	}
 
+	i++;
 	// reset i to 0 if it reaches 2
 	if (i == 2)
 	{
