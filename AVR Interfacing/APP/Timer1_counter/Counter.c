@@ -5,6 +5,8 @@
 #include "KEYPAD.h"
 #include "DIO.h"
 
+#include "Counter.h"
+
 #include "SETTINGS.h"
 #include <util/delay.h>
 #include <avr/interrupt.h>
