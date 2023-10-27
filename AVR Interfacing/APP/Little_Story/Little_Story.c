@@ -209,7 +209,7 @@ void Little_Story_App()
 
 	LCD_clearScreen();
 	LCD_displayStringCenter(1, "FREE PALESTINE");
-	HeartBeat(1, 17, 100);
+	HeartBeat(1, 17, 20);
 
 	LCD_clearScreen();
 	// tick time --> freq
