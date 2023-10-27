@@ -18,11 +18,11 @@
 #include "KEYPAD.h"
 
 #define PLAYERS_POSSIBLE_POSITIONS 2
-#define MAX_SCORE				   5
+#define MAX_SCORE				   3
 
 /************ Delay Times ************/
 #define DELAY_TIME				   500
-#define BALL_DELAY_TIME			   100
+#define BALL_DELAY_TIME			   150
 
 /************ 7amok4a Keys (Left Player) ************/
 #define _7amok4a_UP_KEY			   7
