@@ -12,7 +12,7 @@
 #ifndef __CALCULATOR_H__
 #define __CALCULATOR_H__
 
-#define DELAY_PRESS_TIME 300
+#define DELAY_PRESS_TIME 400
 
 /**
  * @brief Display the main menu on the LCD and handle user input to choose the calculator mode.
