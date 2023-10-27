@@ -301,6 +301,8 @@ void Playground_MainLoop()
 
 	uint8 key = KEYPAD_NO_PRESSED_KEY;
 
+	ScoreGUI(&_7amok4a_lifes, &_7azal2om_lifes);
+
 	while (1)
 	{
 		Ball_Loop();
