@@ -3,9 +3,9 @@
 
 #include "STD_TYPES.h"
 
-#define _1_BIT_BAR_ADDRESS 8 // not used
-#define _2_BIT_BAR_ADDRESS 8 // not used
-#define _3_BIT_BAR_ADDRESS 8 // not used
+#define _1_BIT_BAR_ADDRESS 0
+#define _2_BIT_BAR_ADDRESS 1
+#define _3_BIT_BAR_ADDRESS 2
 #define _4_BIT_BAR_ADDRESS 8 // not used
 #define _5_BIT_BAR_ADDRESS 4
 
