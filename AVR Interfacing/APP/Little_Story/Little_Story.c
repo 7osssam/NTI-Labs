@@ -212,8 +212,6 @@ void Little_Story_App()
 	HeartBeat(1, 17, 20);
 
 	LCD_clearScreen();
-	// tick time --> freq
-	// ocr --> duty
 	while (1)
 	{
 		Directed();
