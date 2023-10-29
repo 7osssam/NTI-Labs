@@ -11,7 +11,7 @@
  *******************************************************************************/
 #include "ADC.h"
 #include "BIT_MACROS.h"
-#include <avr/io.h>		   /* To use the IO Ports Registers */
+#include "DIO_map.h"	   /* To use the DIO Registers */
 #include <avr/interrupt.h> /* For ADC ISR */
 
 static volatile void (*ADC_callBackPtr)(void) = NULL_PTR;
@@ -212,11 +212,6 @@ void ADC_startConversionNonBlocking(ADC_Channel_t channel_num)
 uint16 ADC_getValue(void)
 {
 	return ADC;
-}
-
-void ADC_Chain(ADC_Channel_t channel_num)
-{
-	ADC_startConversionNonBlocking(channel_num);
 }
 
 /******************** Interrupt Service Routines ********************/
