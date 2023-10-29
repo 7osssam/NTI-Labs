@@ -12,8 +12,7 @@
 
 #include "BIT_MACROS.h"
 #include <avr/interrupt.h>
-#include <avr/io.h>
-
+#include "DIO_map.h"
 /****************************Pointer to functions to be assigned to ISR*********************************/
 
 static void (*g_Timer1_OVF_callBackPtr)(void) = NULL_PTR;
@@ -176,6 +175,7 @@ void Timer1_init(const Timer1_ConfigType* Config_Ptr)
 {
 	//*********************************************** Waveform Generation Modes ********************************/
 	TCCR1A = (TCCR1A & 0xFC) | ((Config_Ptr->Timer1_Mode) & 0x03);
+
 	TCCR1B = (TCCR1B & 0xE7) | (((Config_Ptr->Timer1_Mode) & 0x0C) << 1);
 
 	//******************************************** OC1A & OC1B Modes ********************************************//
