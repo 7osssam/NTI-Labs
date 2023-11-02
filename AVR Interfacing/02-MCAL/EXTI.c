@@ -19,6 +19,8 @@ static volatile void (*g_INT0_callBackPtr)(void) = NULL_PTR;
 static volatile void (*g_INT1_callBackPtr)(void) = NULL_PTR;
 static volatile void (*g_INT2_callBackPtr)(void) = NULL_PTR;
 
+#define ISC_MASK 0x03
+
 /*******************************************************************************
  *                                    ISR's                                    *
  *******************************************************************************/
@@ -53,67 +55,31 @@ ISR(INT2_vect)
 /*******************************************************************************
  *                      Functions Definitions                                  *
  *******************************************************************************/
-void EXTI_init(Interrupt_ConfigType* Config_Ptr)
+void EXTI_init(EXTI_ConfigType* Config_Ptr)
 {
 	if (Config_Ptr->interrupt == EXTI_INT0)
 	{
-		switch (Config_Ptr->sense_control)
-		{
-			case low_level:
-				CLEAR_BIT(MCUCR, ISC00);
-				CLEAR_BIT(MCUCR, ISC01);
-				break;
-			case any_logical_change:
-				SET_BIT(MCUCR, ISC00);
-				CLEAR_BIT(MCUCR, ISC01);
-				break;
-			case falling_edge:
-				CLEAR_BIT(MCUCR, ISC00);
-				SET_BIT(MCUCR, ISC01);
-				break;
-			case rising_edge:
-				SET_BIT(MCUCR, ISC00);
-				SET_BIT(MCUCR, ISC01);
-				break;
-		}
+		MCUCR = (MCUCR & ~ISC_MASK) | (Config_Ptr->sense_control & ISC_MASK);
 	}
 	else if (Config_Ptr->interrupt == EXTI_INT1)
 	{
-		switch (Config_Ptr->sense_control)
-		{
-			case low_level:
-				CLEAR_BIT(MCUCR, ISC10);
-				CLEAR_BIT(MCUCR, ISC11);
-				break;
-			case any_logical_change:
-				SET_BIT(MCUCR, ISC10);
-				CLEAR_BIT(MCUCR, ISC11);
-				break;
-			case falling_edge:
-				CLEAR_BIT(MCUCR, ISC10);
-				SET_BIT(MCUCR, ISC11);
-				break;
-			case rising_edge:
-				SET_BIT(MCUCR, ISC10);
-				SET_BIT(MCUCR, ISC11);
-				break;
-		}
+		MCUCR = (MCUCR & ~(ISC_MASK << 2)) | ((Config_Ptr->sense_control & ISC_MASK) << 2);
 	}
 	else if (Config_Ptr->interrupt == EXTI_INT2)
 	{
 		switch (Config_Ptr->sense_control)
 		{
-			case falling_edge:
+			case EXTI_falling_edge:
 				CLEAR_BIT(MCUCSR, ISC2);
 				break;
-			case rising_edge:
+			case EXTI_rising_edge:
 				SET_BIT(MCUCSR, ISC2);
 				break;
 		}
 	}
 }
 
-void EXTI_enable(Interrupt_ConfigType* Config_Ptr)
+void EXTI_enable(EXTI_ConfigType* Config_Ptr)
 {
 	if (Config_Ptr->interrupt == EXTI_INT0)
 	{
@@ -129,7 +95,7 @@ void EXTI_enable(Interrupt_ConfigType* Config_Ptr)
 	}
 }
 
-void EXTI_disable(Interrupt_ConfigType* Config_Ptr)
+void EXTI_disable(EXTI_ConfigType* Config_Ptr)
 {
 	if (Config_Ptr->interrupt == EXTI_INT0)
 	{
@@ -148,7 +114,7 @@ void EXTI_disable(Interrupt_ConfigType* Config_Ptr)
 /*******************************************************************************
  *                      Callback functions implementations                      *
  * *****************************************************************************/
-void EXTI_setCallBack(Interrupt_ConfigType* Config_Ptr, void (*a_ptr)(void))
+void EXTI_setCallBack(EXTI_ConfigType* Config_Ptr, void (*a_ptr)(void))
 {
 	switch (Config_Ptr->interrupt)
 	{
