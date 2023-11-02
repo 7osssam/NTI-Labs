@@ -41,10 +41,10 @@
 #define TOGGLE_MASK(reg, mask)							   ((reg) ^= (mask))
 
 /* Check if a bit is set to 1 and clear it */
-#define TEST_AND_CLEAR_BIT(reg, bit)					   (((reg) >> (bit)) & 1U) && CLEAR_BIT(reg, bit)
+#define TEST_AND_CLEAR_BIT(reg, bit)					   ((((reg) >> (bit)) & 1U) && CLEAR_BIT(reg, bit))
 
 /* Check if a bit is cleared to 0 and set it */
-#define TEST_AND_SET_BIT(reg, bit)						   (!((reg) >> (bit)) & 1U) && SET_BIT(reg, bit)
+#define TEST_AND_SET_BIT(reg, bit)						   ((!((reg) >> (bit)) & 1U) && SET_BIT(reg, bit))
 
 /* Rotate right the register value with a specific number of rotates */
 #define ROR(reg, num)									   ((reg) = ((reg >> (num)) | (reg << (8U - (num)))))
