@@ -13,7 +13,7 @@
 
 #include "Ultrasonic.h"
 #include "BIT_MACROS.h"
-#include "GPIO.h"
+#include "DIO.h"
 #include "ICU.h"
 
 #include "SETTINGS.h"	// for F_CPU
@@ -24,7 +24,7 @@
 /************************************************************************/
 static volatile uint16 Ultrasonic_distance = 0;
 static volatile uint16 Ultrasonic_read = 0;
-static volatile uint8 edgeFlag = 0;
+static volatile uint8  edgeFlag = 0;
 
 /************************************************************************/
 /*					Functions Definitions                                */
@@ -43,13 +43,13 @@ static volatile uint8 edgeFlag = 0;
 void Ultrasonic_init(void)
 {
 	/* ICU configuration structure */
-	ICU_ConfigType ICU_Config = {F_CPU_8, RISING};
+	ICU_ConfigType ICU_Config = {TIMER_F_CPU_8, ICU_RISING};
 	/* Set Trigger pin as output */
-	GPIO_setupPinDirection(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, PIN_OUTPUT);
+	DIO_SetPinDirection(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, PIN_OUTPUT);
 	/* Set Echo pin as input */
-	GPIO_setupPinDirection(ULTRASONIC_ECHO_PORT_ID, ULTRASONIC_ECHO_PIN_ID, PIN_INPUT);
+	DIO_SetPinDirection(ULTRASONIC_ECHO_PORT_ID, ULTRASONIC_ECHO_PIN_ID, PIN_INPUT);
 	/* Set Trigger pin to low */
-	GPIO_writePin(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, LOGIC_LOW);
+	DIO_SetPinValue(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, LOGIC_LOW);
 	/* Initialize ICU */
 	ICU_init(&ICU_Config);
 	/* Set ICU callback function */
@@ -67,9 +67,9 @@ void Ultrasonic_init(void)
 static void Ultrasonic_Trigger(void)
 {
 	/* Send 10us pulse to trigger pin */
-	GPIO_writePin(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, LOGIC_HIGH);
+	DIO_SetPinValue(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, LOGIC_HIGH);
 	_delay_us(10);
-	GPIO_writePin(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, LOGIC_LOW);
+	DIO_SetPinValue(ULTRASONIC_TRIG_PORT_ID, ULTRASONIC_TRIG_PIN_ID, LOGIC_LOW);
 }
 
 /*
@@ -86,16 +86,15 @@ void Ultrasonic_edgeProcessing(void)
 {
 	if (edgeFlag == 0)
 	{
-
 		ICU_clearTimerValue();
-		ICU_setEdgeDetectionType(FALLING);
+		ICU_setEdgeDetectionType(ICU_FALLING);
 		edgeFlag = 1;
 	}
 	else if (edgeFlag == 1)
 	{
 		/* get the edge time */
 		Ultrasonic_read = ICU_getInputCaptureValue();
-		ICU_setEdgeDetectionType(RISING);
+		ICU_setEdgeDetectionType(ICU_RISING);
 		edgeFlag = 0;
 	}
 }
