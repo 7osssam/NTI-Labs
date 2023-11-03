@@ -13,13 +13,13 @@
 
 #include "STD_TYPES.h"
 
-#define EEPROM_DEVICE_ADDRESS (0xA0)
-#define WRITEMODE			  (0x00)
-#define READMODE			  (0x01)
+#define EEPROM_DEVICE_ADDRESS	  (0xA0)
+#define WRITEMODE				  (0x00)
+#define READMODE				  (0x01)
 
-#define EEPROM_SLAVE_ADDRESS  (0x01)
+#define EEPROM_SLAVE_ADDRESS	  (0x01)
 
-#define EEPROM_DELAY_MS		  (10)
+#define EEPROM_OPERATION_DELAY_MS (10)
 
 /*******************************************************************************
  *                      User Defined Types                                     *
