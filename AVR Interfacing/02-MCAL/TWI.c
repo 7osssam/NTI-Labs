@@ -12,23 +12,26 @@
 
 #include "BIT_MACROS.h"
 #include "SETTINGS.h" /* For F_CPU */
-#include <avr/io.h>
+#include "DIO_map.h"
 
 // Calculate the TWBR value for a given SCL frequency and prescaler value
-#define TWBR_VALUE(SCL_freq, TWPS_value) ((F_CPU / SCL_freq) - 16) / (2 * (1 << TWPS_value))
+#define TWBR_VALUE(SCL_freq, TWPS_value) ((F_CPU / SCL_freq) - 16u) / (2u * (1 << TWPS_value))
+
 #define STATUS_MASK						 0xF8
 #define GENERAL_CALL_MASK				 0x01
+
 void TWI_init(const TWI_configType* Config_Ptr)
 {
-	//***************************** Bit Rate *************************
-	TWBR_VALUE(Config_Ptr->SCL_Frq, Config_Ptr->prescaler);
+	//**************** Configure Slave Address and General Call Recognition Mode ***************
+	TWAR = ((Config_Ptr->TWI_slaveAddress) << 1);
 
 	//***************************** Prescaler *************************
 	TWSR = Config_Ptr->prescaler;
 
-	//**************** Configure Slave Address and General Call Recognition Mode ***************
-	TWAR = ((Config_Ptr->TWI_slaveAddress) << 1);
+	//***************************** Bit Rate *************************
+	TWBR = TWBR_VALUE(Config_Ptr->SCL_Frq, Config_Ptr->prescaler);
 
+	//***************************** General Call Recognition Mode *************************
 	TWAR = (TWAR & ~GENERAL_CALL_MASK) |
 		   ((Config_Ptr->generalCallRecognitionMode & GENERAL_CALL_MASK) << (TWGCE));
 
@@ -36,8 +39,8 @@ void TWI_init(const TWI_configType* Config_Ptr)
 	SET_BIT(TWCR, TWEN);
 
 	/* Enable pull up resistors at SCL and SDA Pins */
-	// SET_BIT(PORTC, 4);
-	// SET_BIT(PORTC, 5);
+	//SET_BIT(PORTC, 4);
+	//SET_BIT(PORTC, 5);
 }
 
 void TWI_start(void)
