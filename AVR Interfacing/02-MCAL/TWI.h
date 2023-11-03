@@ -37,10 +37,10 @@
  *******************************************************************************/
 typedef enum
 {
-	NormalMode_100Kb = 100000,
-	FastMode_400Kb = 400000,
-	FastModePlus_1Mb = 1000000,
-	HighSpeedMode_3Mb = 3400000
+	NormalMode_100Kb = 100000u,
+	FastMode_400Kb = 400000u,
+	FastModePlus_1Mb = 1000000u,
+	HighSpeedMode_3Mb = 3400000u
 } SCL_Frquency;
 
 typedef enum
