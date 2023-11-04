@@ -11,7 +11,6 @@
 #ifndef __EEPROM_SERVICES_H__
 #define __EEPROM_SERVICES_H__
 
-#include "EEPROM.h"
 #include "STD_TYPES.h"
 
 /**
@@ -21,7 +20,7 @@
  * @param NofBytes The number of bytes to be written.
  * @param address The starting address of the write operation.
  */
-void EEPROM_WriteNofBytes(uint32 sent_data, uint8 NofBytes, uint8 address);
+void EEPROM_WriteNofBytes(uint32 sent_data, uint8 NofBytes, uint16 address);
 
 /**
  * @brief Reads a specified number of bytes from the EEPROM starting at the specified address.
@@ -30,13 +29,13 @@ void EEPROM_WriteNofBytes(uint32 sent_data, uint8 NofBytes, uint8 address);
  * @param NofBytes The number of bytes to be read.
  * @param address The starting address of the read operation.
  */
-void EEPROM_ReadNofBytes(uint32* sent_data, uint8 NofBytes, uint8 address);
+void EEPROM_ReadNofBytes(uint32* sent_data, uint8 NofBytes, uint16 address);
 /**
  * @brief Resets a specified number of bytes in the EEPROM starting at the specified address to 0.
  * 
  * @param NofBytes The number of bytes to be reset.
  * @param address The starting address of the reset operation.
  */
-void EEPROM_resetNofBytes(uint8 NofBytes, uint8 address);
+void EEPROM_resetNofBytes(uint8 NofBytes, uint16 address);
 
 #endif /* __EEPROM_SERVICES_H__ */

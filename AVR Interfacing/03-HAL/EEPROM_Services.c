@@ -9,19 +9,23 @@
  ********************************************************************/
 
 #include "EEPROM_Services.h"
+#include "EEPROM.h"
 
-void EEPROM_WriteNofBytes(uint32 sent_data, uint8 NofBytes, uint8 address)
+#include "SETTINGS.h"
+#include <util/delay.h>
+
+void EEPROM_WriteNofBytes(uint32 sent_data, uint8 NofBytes, uint16 address)
 {
 	uint8 i;
 
 	for (i = 0; i < NofBytes; i++)
 	{
-		EEPROM_writeByte(address + i, (uint8)(sent_data >> (i * 8)));
-		_delay_ms(EEPROM_DELAY_MS);
+		EEPROM_writeByte(address + i, (uint8)(sent_data >> (i * 8))); // Write the LSB first
+		_delay_ms(EEPROM_OPERATION_DELAY_MS);
 	}
 }
 
-void EEPROM_ReadNofBytes(uint32* sent_data, uint8 NofBytes, uint8 address)
+void EEPROM_ReadNofBytes(uint32* sent_data, uint8 NofBytes, uint16 address)
 {
 	uint8 i;
 	uint8 temp_data;
@@ -29,18 +33,18 @@ void EEPROM_ReadNofBytes(uint32* sent_data, uint8 NofBytes, uint8 address)
 	for (i = 0; i < NofBytes; i++)
 	{
 		EEPROM_readByte(address + i, &temp_data);
-		_delay_ms(EEPROM_DELAY_MS);
+		_delay_ms(EEPROM_OPERATION_DELAY_MS);
 		*sent_data |= ((uint32)(temp_data << (i * 8)));
 	}
 }
 
-void EEPROM_resetNofBytes(uint8 NofBytes, uint8 address)
+void EEPROM_resetNofBytes(uint8 NofBytes, uint16 address)
 {
 	uint8 i;
 
 	for (i = 0; i < NofBytes; i++)
 	{
 		EEPROM_writeByte(address + i, 0);
-		_delay_ms(EEPROM_DELAY_MS);
+		_delay_ms(EEPROM_OPERATION_DELAY_MS);
 	}
 }
