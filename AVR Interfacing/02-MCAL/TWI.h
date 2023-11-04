@@ -14,25 +14,6 @@
 #include "STD_TYPES.h"
 
 /*******************************************************************************
- *                      Preprocessor Macros                                    *
- *******************************************************************************/
-/* TWI Status Bits in the TWSR Register */
-/* start has been sent */
-#define TWI_START		 0x08
-/* repeated start */
-#define TWI_REP_START	 0x10
-/* Master transmit ( slave address + Write request ) to slave + ACK received from slave. */
-#define TWI_MT_SLA_W_ACK 0x18
-/* Master transmit ( slave address + Read request ) to slave + ACK received from slave. */
-#define TWI_MT_SLA_R_ACK 0x40
-/* Master transmit data and ACK has been received from Slave. */
-#define TWI_MT_DATA_ACK	 0x28
-/* Master received data and send ACK to slave. */
-#define TWI_MR_DATA_ACK	 0x50
-/* Master received data but doesn't send ACK to slave. */
-#define TWI_MR_DATA_NACK 0x58
-
-/*******************************************************************************
  *                         Types Declaration                                   *
  *******************************************************************************/
 typedef enum
@@ -57,6 +38,24 @@ typedef enum
 	TWI_GeneralCallRecognitionEnable_OFF,
 	TWI_GeneralCallRecognitionEnable_ON
 } TWI_GENERAL_CALL_RECOGNITION_ENABLE_MODE;
+
+typedef enum
+{ /* start has been sent */
+	TWI_START = 0x08,
+	/* repeated start */
+	TWI_REP_START = 0x10,
+	/* Master transmit ( slave address + Write request ) to slave + ACK received from slave. */
+	TWI_MT_SLA_W_ACK = 0x18,
+	/* Master transmit ( slave address + Read request ) to slave + ACK received from slave. */
+	TWI_MT_SLA_R_ACK = 0x40,
+	/* Master transmit data and ACK has been received from Slave. */
+	TWI_MT_DATA_ACK = 0x28,
+	/* Master received data and send ACK to slave. */
+	TWI_MR_DATA_ACK = 0x50,
+	/* Master received data but doesn't send ACK to slave. */
+	TWI_MR_DATA_NACK = 0x58,
+	TWI_SUCCESS = 0x01,
+} TWI_STATUS_t;
 
 typedef struct
 {
