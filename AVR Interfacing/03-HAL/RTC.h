@@ -15,17 +15,11 @@ typedef struct
 	uint16 Years;
 } RTC_t;
 
-#define C_Ds1307ReadMode_uint8	0xD1u // DS1307 ID
-#define C_Ds1307WriteMode_uint8 0xD0u // DS1307 ID
+#define RTC_DEVICE_ADDRESS	   0xD0
+#define RTC_SLAVE_ADDRESS	   0x02
 
-#define RTC_DEVICE_ADDRESS		0xD0
-#define RTC_SLAVE_ADDRESS		0x02
-
-#define WRITEMODE				(0x00)
-#define READMODE				(0x01)
-
-#define RTC_DECIMAL_2_BCD(val)	((val) + (6 * ((val) / 10)))
-#define RTC_BCD_2_DECIMAL(val)	((val) - (6 * ((val) >> 4)))
+#define RTC_DECIMAL_2_BCD(val) ((val) + (6 * ((val) / 10)))
+#define RTC_BCD_2_DECIMAL(val) ((val) - (6 * ((val) >> 4)))
 
 TWI_STATUS_t RTC_init(void);
 

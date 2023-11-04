@@ -1,10 +1,11 @@
 #include "BIT_MACROS.h"
 #include "TWI.h"
 #include "RTC.h"
-#define ERROR								0
-#define SUCCESS								1
 
 #define A0_A1_A2_BITS_FROM_ADDRESS(address) ((address & 0x0700) >> 7)
+
+#define WRITEMODE							(0x00)
+#define READMODE							(0x01)
 
 static TWI_configType RTC_config = {.TWI_slaveAddress = RTC_SLAVE_ADDRESS,
 									.prescaler = TWI_Prescaler_1,
