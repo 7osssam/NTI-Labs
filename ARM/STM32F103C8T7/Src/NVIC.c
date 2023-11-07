@@ -2,9 +2,9 @@
  * @Title    : Nested Vector Interrupt Controller (NVIC) Driver Source
  * @Filename : NVIC.c
  * @Author   : Hossam Mohamed
- * @Compiler : IAR
- * @Target   : Tiva-C (Tm4c123gh6pm)
- * @Notes 	 : handles the interrupt requests for Tiva-C peripherals
+ * @Compiler : 
+ * @Target   : 
+ * @Notes 	 : 
  ********************************************************************/
 
 #include "NVIC.h"
