@@ -15,58 +15,59 @@
  *
  ******************************************************************************
  */
-// .gitignore file:
+
+#include "STD_TYPES.h"
 #include "RCC.h"
-
-#include "RCC_reg.h"
-#include "BIT_MACROS.h"
 #include "GPIO.h"
-//#include "NVIC.h"
-//#include "exti.h"
 
-//void EXTI0_IRQHandler(void)
-//{
-//	GPIO_TogglePinValue(GPIOA, PIN1);
-//	NVIC_ClearPending(NVIC_EXTI0_IRQ);
-//}
+#include "EXTI.h"
+#include "EXTI_reg.h"
 
-//static void _delay_ms(uint32 ms)
-//{
-//	uint32 i, j;
-//	for (i = 0; i < ms; i++)
-//	{
-//		for (j = 0; j < 1000; j++)
-//		{
-//			__asm("NOP");
-//		}
-//	}
-//}
+#include "NVIC.h"
+
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
+	#warning \
+		"FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
+#endif
+
+void delay(uint32 nCount)
+{
+	for (; nCount != 0; nCount--)
+	{
+		asm("nop");
+	}
+}
+
+void EXTI0_IRQHandler(void)
+{
+	EXTI->PR |= EXTI_PR_PR0;
+	GPIO_TogglePinValue(GPIOB, PIN1);
+}
 
 int main(void)
 {
-	//RCC_Config();
+	RCC_Config();
 
-	SET_BIT(RCC->RCC_CR, HSION); //Enable HSI.
-	while (IS_BIT_CLEAR(RCC->RCC_CR, HSIRDY))
-		;							//Polling until HSI is ready.
-	SET_BIT(RCC->RCC_CIR, HSIRDYC); //Clear HSI ready flag.
+	RCC_EnableCLK(IOPAEN);
+	RCC_EnableCLK(IOPBEN);
 
-	CLEAR_BIT(RCC->RCC_CFGR, SW0); //Select HSI as system clock.
-	CLEAR_BIT(RCC->RCC_CFGR, SW1); //Select HSI as system clock.
+	GPIO_SetPinDirection(GPIOA, PIN0, OUT_PUSH_PULL, OUTPUT_10MHZ);
+	GPIO_SetPinDirection(GPIOA, PIN1, OUT_PUSH_PULL, OUTPUT_10MHZ);
+	GPIO_SetPinDirection(GPIOB, PIN1, OUT_PUSH_PULL, OUTPUT_10MHZ);
 
-	//RCC_EnableCLK(IOPAEN);
-	//RCC_EnableCLK(IOPBEN);
-	SET_BIT(RCC->RCC_APB2ENR, 3);
-
-	//GPIO_SetPinDirection(GPIOA, PIN1, OUT_PUSH_PULL, OUTPUT_10MHZ);
-	//GPIO_SetPinDirection(GPIOB, PIN1, OUT_PUSH_PULL, OUTPUT_10MHZ);
-
-	//GPIO_SetPinValue(GPIOA, PIN1, LOGIC_HIGH);
+	GPIO_SetPinValue(GPIOA, PIN1, LOGIC_HIGH);
 	//GPIO_SetPinValue(GPIOB, PIN1, LOGIC_HIGH);
+
+	NVIC_SetEnable(NVIC_EXTI0_IRQ);
+	NVIC_SetPriority(NVIC_EXTI0_IRQ, 0x10, 0x01);
+
+	EXTI_Init(); // PA0 to EXTI0
 
 	while (1)
 	{
-		//GPIO_TogglePinValue(GPIOA, PIN1);
-		//_delay_ms(1000);
+		delay(100000);
+
+		GPIO_TogglePinValue(GPIOA, PIN1);
+		GPIO_TogglePinValue(GPIOA, PIN0);
 	}
 }
