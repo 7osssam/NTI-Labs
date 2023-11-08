@@ -45,5 +45,11 @@ typedef struct
 } DMA_ConfigType;
 
 void DMA_init(DMA_ConfigType* Config_Ptr);
-
+void DMA_enable(uint8 Channel);
+void DMA_disable(uint8 Channel);
+void DMA_setMemoryAddress(uint8 Channel, uint32* Address);
+void DMA_setPeripheralAddress(uint8 Channel, uint32* Address);
+void DMA_setNumberOfData(uint8 Channel, uint16 NumberOfData);
+void DMA_clearInterruptFlag(uint8 Channel);
+void DMA_channelStart(uint8 Channel, uint32* SourceAddress, uint32* DestinationAddress, uint16 NumberOfData);
 #endif /* DMA_H_ */
