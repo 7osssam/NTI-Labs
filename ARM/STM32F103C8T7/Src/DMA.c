@@ -1,7 +1,7 @@
 #include "DMA.h"
-#include "DMA_reg.h"
-#include "DMA_config.h"
 #include "BIT_MACROS.h"
+#include "DMA_config.h"
+#include "DMA_reg.h"
 
 #define PRIORITY_MASK	 0xFFFF1FFF
 #define PSIZE_MASK		 0xFFFFFCFF
