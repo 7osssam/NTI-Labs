@@ -6,16 +6,16 @@
 
 typedef struct
 {
-	uint32 RCC_CR;
-	uint32 RCC_CFGR;
-	uint32 RCC_CIR;
-	uint32 RCC_APB2RSTR;
-	uint32 RCC_APB1RSTR;
-	uint32 RCC_AHBENR;
-	uint32 RCC_APB2ENR;
-	uint32 RCC_APB1ENR;
-	uint32 RCC_BDCR;
-	uint32 RCC_CSR;
+	volatile uint32 RCC_CR;
+	volatile uint32 RCC_CFGR;
+	volatile uint32 RCC_CIR;
+	volatile uint32 RCC_APB2RSTR;
+	volatile uint32 RCC_APB1RSTR;
+	volatile uint32 RCC_AHBENR;
+	volatile uint32 RCC_APB2ENR;
+	volatile uint32 RCC_APB1ENR;
+	volatile uint32 RCC_BDCR;
+	volatile uint32 RCC_CSR;
 } RCC_Registers;
 
 typedef enum
