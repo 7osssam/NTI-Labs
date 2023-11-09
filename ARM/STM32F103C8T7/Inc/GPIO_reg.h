@@ -36,5 +36,10 @@
 #define PIN8			  (8)
 #define PIN9			  (9)
 #define PIN10			  (10)
+#define PIN11			  (11)
+#define PIN12			  (12)
+#define PIN13			  (13)
+#define PIN14			  (14)
+#define PIN15			  (15)
 
 #endif /* GPIO_REG_H_ */
