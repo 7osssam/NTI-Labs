@@ -24,12 +24,6 @@ typedef unsigned char boolean;
 	#define TRUE (1u)
 #endif
 
-typedef enum
-{
-	DISABLE = 0,
-	ENABLE = 1
-} EnableDisableType;
-
 #define LOGIC_HIGH (1u)
 #define LOGIC_LOW  (0u)
 
