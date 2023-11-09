@@ -1,11 +1,7 @@
-//#include "ADC_App.h"
-//#include "Calculator.h"
-#include "Playground.h"
-int main(void)
-{
-	//ADC_APP();
-	//CalculatorMenu();
+#include "RTC_APP.h"
 
-	Playground_init();
-	Playground_MainLoop();
+int main()
+
+{
+	RTC_APP();
 }
