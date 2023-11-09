@@ -44,6 +44,9 @@ typedef struct
 	DMA_DirectionType Dir;
 } DMA_ConfigType;
 
+#include "DMA_reg.h"
+#define DMA_CCR(channel) DMA1->DMA_Channel[channel].DMA_CCR
+
 void DMA_init(DMA_ConfigType* Config_Ptr);
 void DMA_enable(uint8 Channel);
 void DMA_disable(uint8 Channel);
