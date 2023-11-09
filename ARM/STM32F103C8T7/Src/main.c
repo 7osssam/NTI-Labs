@@ -23,12 +23,16 @@
 #include "EXTI.h"
 #include "EXTI_reg.h"
 
+#include "DMA.h"
+#include "LCD.h"
+
 #include "NVIC.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
 	#warning \
 		"FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
+uint16 Count = 0;
 
 void delay(uint32 nCount)
 {
@@ -44,30 +48,76 @@ void EXTI0_IRQHandler(void)
 	GPIO_TogglePinValue(GPIOB, PIN1);
 }
 
+void DMA1_Channel1_IRQHandler(void)
+{
+	DMA_clearInterruptFlag(DMA_CHANNEL_1);
+
+	LCD_Goto_XY(0, 0);
+	LCD_displayString("Completed ");
+	LCD_displayInteger(Count);
+}
+
+volatile uint32 Arr1[1000];
+volatile uint32 Arr2[1000] = {0};
+volatile uint32 Arr3[1000];
+volatile uint32 Arr4[1000] = {0};
+
+void DMA_APP()
+{
+	/*	Initialize the Array    */
+	for (uint16 i = 0; i < 1000; i++)
+	{
+		Arr1[i] = i;
+		Arr3[i] = i;
+	}
+
+	/*	2- Enable Per Clk "RCC" DMA1		*/
+	RCC_EnableCLK(DMA1EN);
+
+	/*	NVIC Initialization		*/
+	NVIC_SetEnable(NVIC_DMA1_Channel1_IRQ);
+	NVIC_SetPriority(NVIC_DMA1_Channel1_IRQ, 0x10, 0x02);
+
+	/*	DMA1 initilaization	*/
+	DMA_ConfigType DMA_Config = {.Channel = DMA_CHANNEL_1,
+								 .Priority = VERY_HIGH,
+								 .MemSize = WORD,
+								 .PerSize = WORD,
+								 .Dir = READ_FROM_PERIPHERAL};
+
+	DMA_init(&DMA_Config);
+
+	DMA_channelStart(DMA_CHANNEL_1, Arr1, Arr2, 1000);
+
+	for (Count = 0; Count < 1000; Count++)
+	{
+		Arr4[Count] = Arr3[Count];
+	}
+}
+
 int main(void)
 {
 	RCC_Config();
 
 	RCC_EnableCLK(IOPAEN);
 	RCC_EnableCLK(IOPBEN);
+	LCD_init();
 
-	GPIO_SetPinDirection(GPIOA, PIN0, OUT_PUSH_PULL, OUTPUT_10MHZ);
-	GPIO_SetPinDirection(GPIOA, PIN1, OUT_PUSH_PULL, OUTPUT_10MHZ);
-	GPIO_SetPinDirection(GPIOB, PIN1, OUT_PUSH_PULL, OUTPUT_10MHZ);
+	DMA_APP();
+	//NVIC_SetEnable(NVIC_EXTI0_IRQ);
+	//NVIC_SetPriority(NVIC_EXTI0_IRQ, 0x10, 0x01);
 
-	GPIO_SetPinValue(GPIOA, PIN1, LOGIC_HIGH);
-	//GPIO_SetPinValue(GPIOB, PIN1, LOGIC_HIGH);
-
-	NVIC_SetEnable(NVIC_EXTI0_IRQ);
-	NVIC_SetPriority(NVIC_EXTI0_IRQ, 0x10, 0x01);
-
-	EXTI_Init(); // PA0 to EXTI0
+	//EXTI_Init(); // PA0 to EXTI0
 
 	while (1)
 	{
-		delay(100000);
+		LCD_Goto_XY(1, 0);
+		LCD_displayString("DMA APP Completed");
+		//LCD_Goto_XY(0, 1);
+		//LCD_displayInteger(1235);
+		//delay(100000);
 
-		GPIO_TogglePinValue(GPIOA, PIN1);
-		GPIO_TogglePinValue(GPIOA, PIN0);
+		//GPIO_TogglePinValue(GPIOA, PIN1);
+		//GPIO_TogglePinValue(GPIOA, PIN0);
 	}
 }
