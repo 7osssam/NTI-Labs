@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#define HASH_SIZE	  16
-
-#define ROR(reg, num) ((reg) = ((reg >> (num)) | (reg << (8U - (num)))))
+#define HASH_SIZE 16
 
 void GetHash(uint32_t data[HASH_SIZE][HASH_SIZE], uint32_t hash[HASH_SIZE])
 {
@@ -15,9 +13,6 @@ void GetHash(uint32_t data[HASH_SIZE][HASH_SIZE], uint32_t hash[HASH_SIZE])
 		for (uint8_t j = 0; j < HASH_SIZE; j++)
 		{
 			hash[i] += data[i][j];
-
-			// Rotate the hash by 1 bit
-			ROR(hash[i], 5);
 		}
 	}
 }
@@ -61,3 +56,5 @@ int main()
 
 	return 0;
 }
+
+// openssl rsa -noout -modulus -in mykey.pem
