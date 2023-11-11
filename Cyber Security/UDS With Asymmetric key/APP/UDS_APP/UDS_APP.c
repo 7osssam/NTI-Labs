@@ -10,6 +10,7 @@
 
 #include <stdlib.h> // for rand() function
 #include <string.h>
+#include <time.h> // for time() function
 
 #include "SETTINGS.h"
 #include <util/delay.h>
@@ -58,7 +59,6 @@ static void UDS_init()
 	Buzzer_init(); // TODO: Buzzer init
 }
 
-//3101AA00
 uint32 stringToHex(const uint8* str)
 {
 	uint8* endptr;
@@ -71,18 +71,38 @@ uint32 stringtoInt(uint8* str)
 	return strtoul(str, &endptr, 10);
 }
 
-void intToString(uint8 num, uint8* str)
+void intToString(uint32 num, uint8* str)
 {
 	uint8 i = 0;
-	uint8 temp;
 	do
 	{
-		temp = num % 10;
-		str[i] = temp + '0';
+		str[i++] = num % 10 + '0';
 		num /= 10;
-		i++;
 	} while (num != 0);
+
+	// Add a null terminator at the end of the string
 	str[i] = '\0';
+
+	// Reverse the string to get the correct order
+	reverseString(str);
+}
+
+void reverseString(uint8* str)
+{
+	int length = strlen(str);
+	int start = 0;
+	int end = length - 1;
+	while (start < end)
+	{
+		// Swap characters at start and end
+		uint8 temp = str[start];
+		str[start] = str[end];
+		str[end] = temp;
+
+		// Move the pointers toward each other
+		start++;
+		end--;
+	}
 }
 
 void UART_ReceiveMessage(uint8* Str, uint8 len)
@@ -116,17 +136,18 @@ void UART_SendMessage(uint8* Str)
 	}
 }
 
-uint8 encryptMessage(uint8 message) // use any alogrithm
+uint32 encryptMessage(uint32 message) // use any alogrithm
 {
-	message = message ^ 0xFF;
-
-	return message;
+	return message ^ (message % 100);
 }
 
 void GetAccessKey()
 {
-	uint32 random_key = rand() % 10000;
-	uint8  rand_str[4];
+	// Seed the random number generator with the current time
+	srand((uint32)time(NULL));
+
+	uint32 random_key = 1234;
+	uint8  rand_str[5];
 	uint8  security_access_key[4];
 	uint8  security_access_flag = FALSE;
 
@@ -137,12 +158,18 @@ void GetAccessKey()
 		LCD_displayString("Get Key: ");
 		UART_ReceiveMessage(security_access_key, 4);
 
+		//if (stringToHex(security_access_key) == UDS_SECURITY_ACCESS)
 		if (stringToHex(security_access_key) == UDS_SECURITY_ACCESS)
 		{
 			UART_SendMessage(UDS_ENTER_SECURITY_KEY);
+
+			// Convert random_key to a string
 			intToString(random_key, rand_str);
+
+			// Send the random key through UART
 			UART_SendString(rand_str);
 
+			// Encrypt the random key
 			encrypted_key = encryptMessage(random_key);
 			security_access_flag = TRUE;
 
@@ -162,7 +189,8 @@ void GetAccessKey()
 void CheckencryptMessage(void)
 {
 	uint32 received_Key;
-	uint8  received_data[4];
+	uint8  received_data[5];
+	uint8  received_Key_str[5];
 	uint8  received_data_flag = FALSE;
 
 	uint8* encrypted_key_str[4];
@@ -171,6 +199,7 @@ void CheckencryptMessage(void)
 	{
 		LCD_Goto_XY(0, 0);
 		LCD_displayString("Enter MSG: ");
+		LCD_displayInteger(encrypted_key); // FOR TESTING
 		UART_ReceiveMessage(received_data, 4);
 
 		if (stringToHex(received_data) == UDS_CHECK_KEY)
@@ -178,13 +207,14 @@ void CheckencryptMessage(void)
 			LCD_Goto_XY(1, 0);
 			LCD_displayString("Encrypted KEY:");
 			LCD_Goto_XY(2, 0);
-			UART_ReceiveMessage(received_data, 4);
+			UART_ReceiveMessage(received_Key_str, 4);
 
-			received_Key = stringtoInt(received_data);
+			received_Key = stringtoInt(received_Key_str);
 
 			if (received_Key == encrypted_key)
 			{
-				AccessKey_flag == TRUE;
+				AccessKey_flag = TRUE;
+				received_data_flag = TRUE;
 			}
 			else
 			{
@@ -202,17 +232,21 @@ void CheckencryptMessage(void)
 
 void UDS_main()
 {
-	uint8 UDS_RoutineControl_str[8];
-
 	UDS_init();
 
-	while (AccessKey_flag != TRUE)
+	while (1)
 	{
+		uint8 UDS_RoutineControl_str[9];
+
 		LCD_Goto_XY(0, 0);
 		LCD_displayString("ENTER MASSAGE");
 
 		LCD_Goto_XY(1, 0);
 		UART_ReceiveMessage(UDS_RoutineControl_str, 8);
+
+		LCD_displayHex_u32(stringToHex(UDS_RoutineControl_str));
+
+		_delay_ms(1000);
 
 		if (stringToHex(UDS_RoutineControl_str) == UDS_TURN_ON_BUZZER)
 		{
@@ -238,7 +272,15 @@ void UDS_main()
 				UART_SendByte(UDS_SUBROUTINE_CONTROL);	   // 0x01
 				UART_SendByte(UDS_TURN_ON_BUZZER_ID >> 8); // 0xAA
 				UART_SendByte(UDS_TURN_ON_BUZZER_ID);	   // 0x00
+
+				AccessKey_flag = FALSE;
+
+				_delay_ms(5000);
 			}
+		}
+		else
+		{
+			LCD_clearScreen();
 		}
 	}
 }
