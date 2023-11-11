@@ -60,3 +60,4 @@ Mkfile.old
 dkms.conf
 
 *.workspace
+*.code-workspace

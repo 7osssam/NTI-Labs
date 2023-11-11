@@ -1,0 +1,21 @@
+#ST Files 
+*.settings
+*/Debug
+*/Release
+*.metadata
+*.cproject
+*.project
+*.classpath
+
+#STM project files
+*.stm32
+*.stm32cubemx
+
+#Proteus project files
+*.dsn
+*.pdsprj
+*.workspace
+
+#VSCode Folders
+.vscode
+*.code-workspace
