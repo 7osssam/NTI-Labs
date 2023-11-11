@@ -43,12 +43,6 @@ static void UDS_init()
 	Buzzer_init(); // TODO: Buzzer init
 }
 
-uint32 stringToHex(const uint8* str)
-{
-	uint8* endptr;
-	return strtoul(str, &endptr, 16);
-}
-
 void UART_ReceiveMessage(uint8* Str, uint8 len)
 {
 	uint8 i = 0;
