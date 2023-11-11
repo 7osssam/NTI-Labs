@@ -141,12 +141,18 @@ uint32 encryptMessage(uint32 message) // use any alogrithm
 	return message ^ (message % 100);
 }
 
-void GetAccessKey()
+uint32 generateRandomNumber()
 {
 	// Seed the random number generator with the current time
 	srand((uint32)time(NULL));
 
-	uint32 random_key = 1234;
+	// Generate a random number in the range [1000, 9999]
+	return rand() % (9999 - 1000 + 1) + 1000;
+}
+
+void GetAccessKey()
+{
+	uint32 random_key = generateRandomNumber();
 	uint8  rand_str[5];
 	uint8  security_access_key[4];
 	uint8  security_access_flag = FALSE;
@@ -199,7 +205,7 @@ void CheckencryptMessage(void)
 	{
 		LCD_Goto_XY(0, 0);
 		LCD_displayString("Enter MSG: ");
-		LCD_displayInteger(encrypted_key); // FOR TESTING
+		//LCD_displayInteger(encrypted_key); // FOR TESTING
 		UART_ReceiveMessage(received_data, 4);
 
 		if (stringToHex(received_data) == UDS_CHECK_KEY)
@@ -233,7 +239,6 @@ void CheckencryptMessage(void)
 void UDS_main()
 {
 	UDS_init();
-
 	while (1)
 	{
 		uint8 UDS_RoutineControl_str[9];
@@ -243,11 +248,6 @@ void UDS_main()
 
 		LCD_Goto_XY(1, 0);
 		UART_ReceiveMessage(UDS_RoutineControl_str, 8);
-
-		LCD_displayHex_u32(stringToHex(UDS_RoutineControl_str));
-
-		_delay_ms(1000);
-
 		if (stringToHex(UDS_RoutineControl_str) == UDS_TURN_ON_BUZZER)
 		{
 			if (AccessKey_flag == FALSE)
