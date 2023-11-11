@@ -13,6 +13,12 @@ void LCD_displayHex_u32(uint32 num)
 	}
 }
 
+uint32 stringToHex(const uint8* str)
+{
+	uint8* endptr;
+	return strtoul(str, &endptr, 16);
+}
+
 uint32 stringtoInt(uint8* str)
 {
 	uint8* endptr;
