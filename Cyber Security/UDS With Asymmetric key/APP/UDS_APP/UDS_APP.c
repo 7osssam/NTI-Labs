@@ -123,13 +123,6 @@ void GetAccessKey()
 
 			UART_SendFourBytes(random_key);
 
-			LCD_Goto_XY(1, 0);
-			LCD_displayHex_u32(random_key, UDS_LARGE_MESSAGE);
-			LCD_Goto_XY(2, 0);
-			LCD_displayInteger(random_key);
-
-			_delay_ms(5000);
-
 			// Encrypt the random key
 			encrypted_key = encryptMessage((random_key << 16));
 			security_access_flag = TRUE;
@@ -140,7 +133,6 @@ void GetAccessKey()
 			LCD_Goto_XY(3, 0);
 			LCD_displayString(" Rand:");
 			LCD_displayInteger(random_key);
-			//LCD_displayHex_u32(random_key, UDS_LARGE_MESSAGE);
 		}
 		else
 		{
