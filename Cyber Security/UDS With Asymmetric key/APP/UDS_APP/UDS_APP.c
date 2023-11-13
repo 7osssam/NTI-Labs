@@ -92,15 +92,6 @@ uint16 encryptMessage(uint16 message)
 	return message ^ (message % 100);
 }
 
-void UART_ReceiveMessage(uint8* str, uint8 len)
-{
-	//empty
-}
-void UART_SendMessage(uint8* str)
-{
-	//empty
-}
-
 void GetAccessKey()
 {
 	uint32 random_key = generateRandomNumber();
