@@ -18,3 +18,8 @@ uint32 generateRandomNumber()
 	// Generate a random number in the range [1000, 9999]
 	return rand() % (9999 - 1000 + 1) + 1000;
 }
+
+uint16 encryptMessage(uint16 message)
+{
+	return message ^ (message % 100);
+}

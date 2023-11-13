@@ -7,4 +7,6 @@ uint32 stringToHex(const uint8* str);
 
 uint32 generateRandomNumber();
 
+uint16 encryptMessage(uint16 message);
+
 #endif // SERVICES_H
